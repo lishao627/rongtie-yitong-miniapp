@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>移动端登录页原型图</title>
+  <!-- 原型图：移动端登录页面，仅账号密码登录 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "PingFang SC",
+        "Helvetica Neue", Arial, sans-serif;
+      background: #edf0f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #1f2933;
+    }
+
+    .canvas {
+      display: flex;
+      gap: 32px;
+      padding: 24px;
+      max-width: 1200px;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 左侧：手机预览区域 */
+    .phone-wrapper {
+      display: flex;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    .phone {
+      width: 360px;
+      height: 720px;
+      border-radius: 40px;
+      background: #111827;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.7);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .phone-notch {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 18px;
+      border-radius: 10px;
+      background: #020617;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 28px;
+      background: radial-gradient(circle at 10% 0, #e4f0ff 0, #c7d8ff 40%, #a7b7ff 70%, #9b8cff 100%);
+      padding: 96px 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .card-header {
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .card-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #111827;
+      letter-spacing: 1px;
+    }
+    .card-subtitle {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .form {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      font-size: 14px;
+    }
+
+    .field-label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .field {
+      position: relative;
+    }
+
+    .input {
+      width: 100%;
+      height: 44px;
+      border-radius: 16px;
+      border: 1px solid #e0e3e8;
+      padding: 0 38px 0 14px;
+      font-size: 14px;
+      color: #111827;
+      background: #ffffff;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+    }
+    .input::placeholder {
+      color: #9ca3af;
+    }
+    .input:focus {
+      border-color: #4a90e2;
+      box-shadow: 0 0 0 1px rgba(74, 144, 226, 0.35);
+      background-color: #ffffff;
+    }
+
+    .input-icon-box {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #e0e7ff, #fef9c3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #4b5563;
+      pointer-events: none;
+    }
+
+    .row-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+      font-size: 12px;
+    }
+
+    .remember {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+      color: #4b5563;
+    }
+
+    .remember-box {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1px solid #cbd5f5;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #ffffff;
+      transition: all 0.16s ease;
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+
+    .remember-box.active {
+      background: #4a90e2;
+      border-color: #4a90e2;
+      box-shadow: 0 6px 14px rgba(74, 144, 226, 0.55);
+    }
+
+    .remember-text {
+      font-size: 12px;
+    }
+
+    .link {
+      font-size: 12px;
+      color: #4a90e2;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .btn-login {
+      margin-top: 10px;
+      width: 100%;
+      height: 46px;
+      border-radius: 999px;
+      border: none;
+      background-image: linear-gradient(90deg, #4a90e2, #357abd);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 16px 30px rgba(74, 144, 226, 0.5);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease, filter 0.12s ease;
+    }
+    .btn-login:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 40px rgba(74, 144, 226, 0.65);
+      filter: brightness(1.03);
+    }
+    .btn-login:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 10px 20px rgba(74, 144, 226, 0.4);
+      opacity: 0.9;
+    }
+    .btn-login.disabled {
+      opacity: 0.45;
+      cursor: default;
+      box-shadow: 0 10px 20px rgba(148, 163, 184, 0.45);
+      filter: grayscale(0.15);
+    }
+
+    .login-tip {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 12px;
+      color: #9ca1b7;
+    }
+    .login-tip .login-link {
+      color: #4a90e2;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .login-tip .login-link:hover {
+      text-decoration: underline;
+    }
+
+    .toast {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 14px;
+      border-radius: 999px;
+      background-color: rgba(26, 32, 54, 0.96);
+      color: #ffffff;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .toast-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #7fffd4;
+    }
+    .toast.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    /* 右侧：设计说明（原型图说明） */
+    .spec {
+      flex: 0 0 380px;
+      max-height: 720px;
+      overflow: auto;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 20px;
+      box-shadow: 0 16px 40px rgba(148, 163, 184, 0.6);
+      padding: 20px 22px;
+    }
+    .spec-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .spec-subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 12px;
+    }
+    .spec-section-title {
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #111827;
+    }
+    .spec-list {
+      margin: 4px 0 6px 16px;
+      padding: 0;
+      font-size: 12px;
+      color: #4b5563;
+    }
+    .spec-list li {
+      margin-bottom: 3px;
+    }
+
+    .canvas {
+      display: flex;
+      gap: 32px;
+      padding: 24px;
+      max-width: 1200px;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 小屏兼容：上下布局，仍可一屏内滚动查看 */
+    @media (max-width: 980px) {
+      .canvas {
+        flex-direction: column;
+        gap: 20px;
+      }
+      .spec {
+        width: 100%;
+        max-width: 420px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="canvas">
+    <!-- 手机预览（原型图） -->
+    <div class="phone-wrapper">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="card">
+            <header class="card-header">
+              <div class="card-title">欢迎回来</div>
+              <div class="card-subtitle">请登录以继续访问您的账户</div>
+            </header>
+
+            <main class="form" id="login-form">
+              <div>
+                <div class="field-label">用户名</div>
+                <div class="field">
+                  <input
+                    id="username"
+                    class="input"
+                    type="text"
+                    placeholder="请输入用户名"
+                    autocomplete="off"
+                  />
+                  <div class="input-icon-box">👤</div>
+                </div>
+              </div>
+
+              <div>
+                <div class="field-label">密码</div>
+                <div class="field">
+                  <input
+                    id="password"
+                    class="input"
+                    type="password"
+                    placeholder="请输入密码"
+                    autocomplete="off"
+                  />
+                  <div class="input-icon-box">🔒</div>
+                </div>
+              </div>
+
+              <div class="row-between">
+                <div class="remember" id="remember-toggle">
+                  <div class="remember-box" id="remember-box"></div>
+                  <span class="remember-text">记住我</span>
+                </div>
+                <a class="link" id="forget-link">忘记密码？</a>
+              </div>
+
+              <button class="btn-login disabled" id="login-btn" disabled>登 录</button>
+
+              <div class="login-tip">
+                还没有账号？
+                <a class="login-link" id="register-link">立即注册</a>
+              </div>
+            </main>
+
+            <div class="toast" id="toast">
+              <div class="toast-dot"></div>
+              <span id="toast-text">这是一个示例提示</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧：原型图设计说明 -->
+    <aside class="spec">
+      <div class="spec-title">移动端登录页面 · 原型图设计说明</div>
+      <div class="spec-subtitle">定位：简洁、可信、轻量玻璃拟态风格，仅账号密码登录。</div>
+
+      <div class="spec-section-title">1. 页面结构与布局</div>
+      <ul class="spec-list">
+        <li>整体采用 <strong>居中单一设备预览</strong>，桌面端可直接截图作为原型图。</li>
+        <li>黑色手机外框 + 渐变背景，凸显登录卡片主体。</li>
+        <li>卡片内部以纵向信息流排列：标题 → 输入区域 → 辅助操作 → 主操作按钮 → 注册引导。</li>
+      </ul>
+
+      <div class="spec-section-title">2. 视觉风格</div>
+      <ul class="spec-list">
+        <li>背景使用从浅蓝到淡紫的渐变，营造科技感与安全感。</li>
+        <li>登录卡片使用 <strong>24px 圆角</strong> 与柔和投影，形成悬浮玻璃卡片效果。</li>
+        <li>图标背景采用浅蓝到米黄色渐变，强化可点击感但不喧宾夺主。</li>
+      </ul>
+
+      <div class="spec-section-title">3. 表单与输入体验</div>
+      <ul class="spec-list">
+        <li>两行输入框高度一致，左右内边距充足，支持拇指快速点击。</li>
+        <li>获取焦点时边框高亮（#4A90E2）并附带轻微外发光，提示当前输入位置。</li>
+        <li>「记住我」使用自定义勾选框，选中时渐进阴影提升选中反馈。</li>
+      </ul>
+
+      <div class="spec-section-title">4. 按钮与主行动</div>
+      <ul class="spec-list">
+        <li>主按钮使用蓝色线性渐变，48px 级别高度，保证触控面积符合移动端规范。</li>
+        <li>Hover / Active 状态提供轻微位移与阴影变化，模拟物理按压感。</li>
+        <li>当用户名与密码任一为空时，登录按钮变为 <strong>半透明禁用态</strong>，避免无效点击。</li>
+      </ul>
+
+      <div class="spec-section-title">5. 交互与状态反馈</div>
+      <ul class="spec-list">
+        <li>点击「记住我」可开关记住状态；</li>
+        <li>点击「登录」在当前原型中会弹出底部 <strong>Toast 提示</strong>，模拟登录反馈；</li>
+        <li>「忘记密码？」与「立即注册」当前触发的信息提示，用于演示后续可能的跳转流程。</li>
+        <li>支持在任意输入框中按 Enter 触发登录行为，提升键盘操作效率。</li>
+      </ul>
+    </aside>
+  </div>
+
+  <script>
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+    const loginBtn = document.getElementById("login-btn");
+    const toast = document.getElementById("toast");
+    const toastText = document.getElementById("toast-text");
+    const rememberBox = document.getElementById("remember-box");
+    const rememberToggle = document.getElementById("remember-toggle");
+    const forgetLink = document.getElementById("forget-link");
+    const registerLink = document.getElementById("register-link");
+
+    let remember = true;
+    rememberBox.classList.add("active");
+    rememberBox.textContent = "✓";
+
+    function showToast(text) {
+      toastText.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2000);
+    }
+
+    function updateButtonState() {
+      const enabled = username.value.trim() && password.value.trim();
+      loginBtn.disabled = !enabled;
+      loginBtn.classList.toggle("disabled", !enabled);
+    }
+
+    username.addEventListener("input", updateButtonState);
+    password.addEventListener("input", updateButtonState);
+
+    rememberToggle.addEventListener("click", () => {
+      remember = !remember;
+      rememberBox.classList.toggle("active", remember);
+      rememberBox.textContent = remember ? "✓" : "";
+    });
+
+    loginBtn.addEventListener("click", () => {
+      if (loginBtn.disabled) return;
+      showToast("已模拟登录：原型交互触发成功");
+    });
+
+    [username, password].forEach((el) => {
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          loginBtn.click();
+        }
+      });
+    });
+
+    forgetLink.addEventListener("click", () => {
+      showToast("忘记密码流程可在正式版本中接入");
+    });
+
+    registerLink.addEventListener("click", () => {
+      showToast("这里可以跳转到注册页面原型");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>溶贴易通 - UI设计预览</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 统一的 Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4a90e2',
+                        secondary: '#9b8cff',
+                        accent: '#f5a623',
+                        success: '#7ed321',
+                        dark: '#2c3e50',
+                        light: '#f8f9fa'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-card {
+                @apply bg-white/70 backdrop-blur-lg border border-white/50 shadow-lg rounded-2xl;
+            }
+            .gradient-bg {
+                @apply bg-gradient-to-br from-blue-100 via-purple-100 to-indigo-100;
+            }
+            .text-gradient {
+                @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+            }
+            .btn-primary {
+                @apply bg-gradient-to-r from-primary to-secondary text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1;
+            }
+            .btn-secondary {
+                @apply bg-white/80 backdrop-blur-sm border border-gray-200 text-dark font-medium py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300;
+            }
+            .input-field {
+                @apply bg-white/90 backdrop-blur-sm border border-gray-200 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300;
+            }
+            .no-scrollbar {
+                @apply scrollbar-hide;
+            }
+        }
+    </style>
+    <!-- 隐藏滚动条的样式 -->
+    <style>
+        /* 隐藏滚动条 */
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* 渐变背景动画 */
+        .gradient-bg {
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* 玻璃卡片悬停效果 */
+        .glass-card {
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 按钮点击效果 */
+        .btn-primary:active,
+        .btn-secondary:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gradient">溶贴易通 - UI设计预览</h1>
+        
+        <!-- 页面预览容器 -->
+        <div class="flex flex-wrap gap-6 justify-center">
+            <!-- 首页预览 -->
+            <div class="w-full md:w-[350px] lg:w-[400px] bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-gray-200">
+                <div class="h-[600px] gradient-bg no-scrollbar overflow-y-auto">
+                    <!-- 顶部导航栏 -->
+                    <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-white/50">
+                        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center">
+                                    <span class="text-white font-bold text-lg">R</span>
+                                </div>
+                                <h2 class="text-xl font-bold text-dark">溶贴易通</h2>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button class="text-dark hover:text-primary transition-colors">
+                                    <i class="fa fa-search text-lg"></i>
+                                </button>
+                                <button class="text-dark hover:text-primary transition-colors relative">
+                                    <i class="fa fa-shopping-cart text-lg"></i>
+                                    <span class="absolute -top-2 -right-2 w-5 h-5 bg-accent text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <!-- 搜索栏 -->
+                    <div class="container mx-auto px-4 py-4">
+                        <div class="glass-card flex items-center px-4 py-3">
+                            <i class="fa fa-search text-gray-400 mr-3"></i>
+                            <input type="text" placeholder="搜索可溶性商标产品..." class="bg-transparent border-none outline-none flex-1 text-gray-700 placeholder-gray-400">
+                        </div>
+                    </div>
+                    
+                    <!-- 推荐商品 -->
+                    <div class="container mx-auto px-4 py-2">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold text-dark">推荐商品</h3>
+                            <button class="text-primary text-sm font-medium">查看全部 <i class="fa fa-chevron-right text-xs"></i></button>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- 商品卡片 1 -->
+                            <div class="glass-card p-3 rounded-xl">
+                                <div class="aspect-square bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center mb-3">
+                                    <img src="https://images.unsplash.com/photo-1576181256732-0c04247bc413?w=200&h=200&auto=format&fit=crop" alt="苹果可溶性商标" class="w-20 h-20 object-contain">
+                                </div>
+                                <h4 class="font-semibold text-gray-800 mb-1">苹果可溶性商标</h4>
+                                <p class="text-primary font-bold">¥19.9</p>
+                            </div>
+                            <!-- 商品卡片 2 -->
+                            <div class="glass-card p-3 rounded-xl">
+                                <div class="aspect-square bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-lg flex items-center justify-center mb-3">
+                                    <img src="https://images.unsplash.com/photo-1579613543842-33c89424de2d?w=200&h=200&auto=format&fit=crop" alt="香蕉可溶性商标" class="w-20 h-20 object-contain">
+                                </div>
+                                <h4 class="font-semibold text-gray-800 mb-1">香蕉可溶性商标</h4>
+                                <p class="text-primary font-bold">¥24.9</p>
+                            </div>
+                            <!-- 商品卡片 3 -->
+                            <div class="glass-card p-3 rounded-xl">
+                                <div class="aspect-square bg-gradient-to-br from-orange-100 to-red-200 rounded-lg flex items-center justify-center mb-3">
+                                    <img src="https://images.unsplash.com/photo-1590183808375-c89b7c82871c?w=200&h=200&auto=format&fit=crop" alt="橙子可溶性商标" class="w-20 h-20 object-contain">
+                                </div>
+                                <h4 class="font-semibold text-gray-800 mb-1">橙子可溶性商标</h4>
+                                <p class="text-primary font-bold">¥22.9</p>
+                            </div>
+                            <!-- 商品卡片 4 -->
+                            <div class="glass-card p-3 rounded-xl">
+                                <div class="aspect-square bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center mb-3">
+                                    <img src="https://images.unsplash.com/photo-1587049651119-b69c7b1c5847?w=200&h=200&auto=format&fit=crop" alt="葡萄可溶性商标" class="w-20 h-20 object-contain">
+                                </div>
+                                <h4 class="font-semibold text-gray-800 mb-1">葡萄可溶性商标</h4>
+                                <p class="text-primary font-bold">¥26.9</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 功能导航 -->
+                    <div class="container mx-auto px-4 py-6">
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="flex flex-col items-center gap-2">
+                                <div class="w-14 h-14 bg-gradient-to-br from-primary/10 to-primary/20 rounded-xl flex items-center justify-center">
+                                    <i class="fa fa-th-large text-primary text-xl"></i>
+                                </div>
+                                <span class="text-xs text-gray-600">全部商品</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2">
+                                <div class="w-14 h-14 bg-gradient-to-br from-secondary/10 to-secondary/20 rounded-xl flex items-center justify-center">
+                                    <i class="fa fa-ticket text-secondary text-xl"></i>
+                                </div>
+                                <span class="text-xs text-gray-600">领券中心</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2">
+                                <div class="w-14 h-14 bg-gradient-to-br from-accent/10 to-accent/20 rounded-xl flex items-center justify-center">
+                                    <i class="fa fa-gift text-accent text-xl"></i>
+                                </div>
+                                <span class="text-xs text-gray-600">会员中心</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2">
+                                <div class="w-14 h-14 bg-gradient-to-br from-success/10 to-success/20 rounded-xl flex items-center justify-center">
+                                    <i class="fa fa-user text-success text-xl"></i>
+                                </div>
+                                <span class="text-xs text-gray-600">个人中心</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 底部标签栏 -->
+                    <footer class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-white/50 py-3">
+                        <div class="container mx-auto px-4">
+                            <div class="flex items-center justify-around">
+                                <div class="flex flex-col items-center gap-1">
+                                    <i class="fa fa-home text-primary text-xl"></i>
+                                    <span class="text-xs text-primary font-medium">首页</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1">
+                                    <i class="fa fa-shopping-bag text-gray-400 text-xl"></i>
+                                    <span class="text-xs text-gray-500">商品</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1">
+                                    <i class="fa fa-shopping-cart text-gray-400 text-xl"></i>
+                                    <span class="text-xs text-gray-500">购物车</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1">
+                                    <i class="fa fa-user text-gray-400 text-xl"></i>
+                                    <span class="text-xs text-gray-500">我的</span>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+            
+            <!-- 购物车页面预览 -->
+            <div class="w-full md:w-[350px] lg:w-[400px] bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-gray-200">
+                <div class="h-[600px] gradient-bg no-scrollbar overflow-y-auto">
+                    <!-- 顶部导航栏 -->
+                    <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-white/50">
+                        <div class="container mx-auto px-4 py-4 flex items-center">
+                            <button class="mr-4 text-dark hover:text-primary transition-colors">
+                                <i class="fa fa-arrow-left text-lg"></i>
+                            </button>
+                            <h2 class="text-xl font-bold text-dark flex-1 text-center">购物车</h2>
+                            <div class="w-8"></div>
+                        </div>
+                    </header>
+                    
+                    <!-- 购物车商品列表 -->
+                    <div class="container mx-auto px-4 py-6">
+                        <!-- 商品项 1 -->
+                        <div class="glass-card p-4 rounded-xl mb-4">
+                            <div class="flex items-start gap-4">
+                                <input type="checkbox" class="mt-1 w-5 h-5 text-primary rounded-full border-gray-300 focus:ring-primary">
+                                <div class="w-20 h-20 bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <img src="https://images.unsplash.com/photo-1576181256732-0c04247bc413?w=100&h=100&auto=format&fit=crop" alt="苹果可溶性商标" class="w-16 h-16 object-contain">
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-semibold text-gray-800 mb-1 truncate">苹果可溶性商标</h4>
+                                    <p class="text-sm text-gray-500 mb-2">尺寸：中尺寸 | 材质：标准材质</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-primary font-bold">¥19.9</span>
+                                        <div class="flex items-center gap-2">
+                                            <button class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors">
+                                                <i class="fa fa-minus text-xs"></i>
+                                            </button>
+                                            <span class="text-sm font-medium">1</span>
+                                            <button class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors">
+                                                <i class="fa fa-plus text-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 商品项 2 -->
+                        <div class="glass-card p-4 rounded-xl mb-4">
+                            <div class="flex items-start gap-4">
+                                <input type="checkbox" class="mt-1 w-5 h-5 text-primary rounded-full border-gray-300 focus:ring-primary" checked>
+                                <div class="w-20 h-20 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <img src="https://images.unsplash.com/photo-1579613543842-33c89424de2d?w=100&h=100&auto=format&fit=crop" alt="香蕉可溶性商标" class="w-16 h-16 object-contain">
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-semibold text-gray-800 mb-1 truncate">香蕉可溶性商标</h4>
+                                    <p class="text-sm text-gray-500 mb-2">尺寸：中尺寸 | 材质：标准材质</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-primary font-bold">¥24.9</span>
+                                        <div class="flex items-center gap-2">
+                                            <button class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors">
+                                                <i class="fa fa-minus text-xs"></i>
+                                            </button>
+                                            <span class="text-sm font-medium">2</span>
+                                            <button class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors">
+                                                <i class="fa fa-plus text-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 商品项 3 -->
+                        <div class="glass-card p-4 rounded-xl mb-4">
+                            <div class="flex items-start gap-4">
+                                <input type="checkbox" class="mt-1 w-5 h-5 text-primary rounded-full border-gray-300 focus:ring-primary">
+                                <div class="w-20 h-20 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <img src="https://images.unsplash.com/photo-1587049651119-b69c7b1c5847?w=100&h=100&auto=format&fit=crop" alt="葡萄可溶性商标" class="w-16 h-16 object-contain">
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-semibold text-gray-800 mb-1 truncate">葡萄可溶性商标</h4>
+                                    <p class="text-sm text-gray-500 mb-2">尺寸：中尺寸 | 材质：标准材质</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-primary font-bold">¥26.9</span>
+                                        <div class="flex items-center gap-2">
+                                            <button class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors">
+                                                <i class="fa fa-minus text-xs"></i>
+                                            </button>
+                                            <span class="text-sm font-medium">1</span>
+                                            <button class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors">
+                                                <i class="fa fa-plus text-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 底部结算栏 -->
+                    <footer class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-white/50 py-4">
+                        <div class="container mx-auto px-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" class="w-5 h-5 text-primary rounded-full border-gray-300 focus:ring-primary">
+                                    <span class="text-sm font-medium text-gray-700">全选</span>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="text-right">
+                                        <span class="text-sm text-gray-600">合计：</span>
+                                        <span class="text-lg font-bold text-primary">¥64.7</span>
+                                    </div>
+                                    <button class="btn-primary py-2 px-6 text-sm">
+                                        结算 (2)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+            
+            <!-- 我的页面预览 -->
+            <div class="w-full md:w-[350px] lg:w-[400px] bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-gray-200">
+                <div class="h-[600px] gradient-bg no-scrollbar overflow-y-auto">
+                    <!-- 顶部导航栏 -->
+                    <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-white/50">
+                        <div class="container mx-auto px-4 py-4 flex items-center">
+                            <div class="w-8"></div>
+                            <h2 class="text-xl font-bold text-dark flex-1 text-center">我的</h2>
+                            <button class="text-dark hover:text-primary transition-colors">
+                                <i class="fa fa-cog text-lg"></i>
+                            </button>
+                        </div>
+                    </header>
+                    
+                    <!-- 用户信息区域 -->
+                    <div class="container mx-auto px-4 py-6">
+                        <div class="glass-card p-6 rounded-xl mb-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-user text-white text-2xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-bold text-dark mb-1">溶贴易通用户</h3>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">普通会员</span>
+                                        <span class="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full">积分：128</span>
+                                    </div>
+                                    <button class="text-sm text-primary hover:underline">编辑个人信息</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 订单状态 -->
+                        <div class="glass-card p-4 rounded-xl mb-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-semibold text-dark">我的订单</h4>
+                                <button class="text-sm text-primary hover:underline">查看全部</button>
+                            </div>
+                            <div class="grid grid-cols-4 gap-2">
+                                <div class="flex flex-col items-center gap-2">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-accent/10 to-accent/20 rounded-xl flex items-center justify-center">
+                                        <i class="fa fa-credit-card text-accent text-lg"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-600">待付款</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-2">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-primary/10 to-primary/20 rounded-xl flex items-center justify-center">
+                                        <i class="fa fa-truck text-primary text-lg"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-600">待发货</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-2">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-secondary/10 to-secondary/20 rounded-xl flex items-center justify-center">
+                                        <i class="fa fa-box text-secondary text-lg"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-600">待收货</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-2">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-success/10 to-success/20 rounded-xl flex items-center justify-center">
+                                        <i class="fa fa-star text-success text-lg"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-600">待评价</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 功能菜单 -->
+                        <div class="glass-card rounded-xl mb-6 overflow-hidden">
+                            <div class="flex items-center justify-between p-4 border-b border-gray-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-primary/10 to-primary/20 rounded-lg flex items-center justify-center">
+                                        <i class="fa fa-map-marker text-primary"></i>
+                                    </div>
+                                    <span class="font-medium text-gray-800">收货地址</span>
+                                </div>
+                                <i class="fa fa-chevron-right text-gray-400"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-4 border-b border-gray-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-secondary/10 to-secondary/20 rounded-lg flex items-center justify-center">
+                                        <i class="fa fa-ticket text-secondary"></i>
+                                    </div>
+                                    <span class="font-medium text-gray-800">优惠券</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs text-accent font-medium">3张可用</span>
+                                    <i class="fa fa-chevron-right text-gray-400"></i>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 border-b border-gray-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-accent/10 to-accent/20 rounded-lg flex items-center justify-center">
+                                        <i class="fa fa-heart text-accent"></i>
+                                    </div>
+                                    <span class="font-medium text-gray-800">我的收藏</span>
+                                </div>
+                                <i class="fa fa-chevron-right text-gray-400"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-success/10 to-success/20 rounded-lg flex items-center justify-center">
+                                        <i class="fa fa-history text-success"></i>
+                                    </div>
+                                    <span class="font-medium text-gray-800">浏览历史</span>
+                                </div>
+                                <i class="fa fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- 服务支持 -->
+                        <div class="glass-card rounded-xl mb-16 overflow-hidden">
+                            <div class="flex items-center justify-between p-4 border-b border-gray-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-primary/10 to-primary/20 rounded-lg flex items-center justify-center">
+                                        <i class="fa fa-headphones text-primary"></i>
+                                    </div>
+                                    <span class="font-medium text-gray-800">客服中心</span>
+                                </div>
+                                <i class="fa fa-chevron-right text-gray-400"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-4 border-b border-gray-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-secondary/10 to-secondary/20 rounded-lg flex items-center justify-center">
+                                        <i class="fa fa-question-circle text-secondary"></i>
+                                    </div>
+                                    <span class="font-medium text-gray-800">常见问题</span>
+                                </div>
+                                <i class="fa fa-chevron-right text-gray-400"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-accent/10 to-accent/20 rounded-lg flex items-center justify-center">
+                                        <i class="fa fa-info-circle text-accent"></i>
+                                    </div>
+                                    <span class="font-medium text-gray-800">关于我们</span>
+                                </div>
+                                <i class="fa fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

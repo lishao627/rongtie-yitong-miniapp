@@ -127,9 +127,14 @@ npm run dev:mp-weixin
 ## 📱 功能截图
 
 <p align="center">
-  <img src="src/static/apple.jpg" width="150" alt="商品展示">
-  <img src="src/static/草莓.jpg" width="150" alt="商品展示">
-  <img src="src/static/蓝莓.jpg" width="150" alt="商品展示">
+  <img width="580" height="1302" alt="屏幕截图 2026-03-03 220423" src="https://github.com/user-attachments/assets/112abe73-d818-40c2-a1fa-a08706862954" />
+  <img width="615" height="1320" alt="屏幕截图 2026-03-03 222512" src="https://github.com/user-attachments/assets/23b9d157-e512-4d96-a9d5-f74291963365" />
+  <img width="626" height="1301" alt="屏幕截图 2026-03-03 222753" src="https://github.com/user-attachments/assets/f6be2bd3-41ae-42e2-a4cd-88b5fd9badb4" />
+  <img width="700" height="1410" alt="屏幕截图 2026-02-28 143311" src="https://github.com/user-attachments/assets/f0476dfe-314f-43dd-a5d6-570673b4310a" />
+  <img width="760" height="1341" alt="屏幕截图 2026-02-28 150031" src="https://github.com/user-attachments/assets/441bedac-e11c-4d08-a8de-c005bcf1884c" />
+  <img width="708" height="1529" alt="屏幕截图 2026-02-27 103704" src="https://github.com/user-attachments/assets/358cbae4-0fad-42bf-8c7c-9e1b99a332bc" />
+
+
 </p>
 
 ---
@@ -177,7 +182,7 @@ npm run dev:mp-weixin
 
 如有问题或建议，欢迎通过以下方式联系：
 
-- 邮箱：您的邮箱@example.com
+- 邮箱：您的邮箱@lishaos627@gmail.com
 - GitHub Issues：[提交问题](https://github.com/lishao627/rongtie-yitong-miniapp/issues)
 
 ---
